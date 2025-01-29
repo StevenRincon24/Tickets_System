@@ -29,6 +29,16 @@ class User extends Authenticatable
         return $this->hasMany(Incidencia::class);
     }
 
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario_Incidencia::class);
+    }
+
+    public function notificaciones()
+    {
+        return $this->hasMany(Notificaciones_Incidencia::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

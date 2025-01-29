@@ -8,7 +8,7 @@ import Navigation from '@/Layouts/Navigation.vue';
         <Navigation />
 
         <div class="flex flex-1 flex-col overflow-hidden">
-            <Header />
+            <Header :notificaciones="$page.props.notificaciones" />
 
             <main class="flex-1 overflow-y-auto overflow-x-hidden bg-gray-200">
                 <div class="container mx-auto px-6 py-8">

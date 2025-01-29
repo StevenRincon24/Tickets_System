@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comentario_Incidencia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ComentarioIncidenciaController extends Controller
 {
@@ -18,17 +19,25 @@ class ComentarioIncidenciaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $incidenciaId)
     {
-        //
+        // Validar la solicitud
+        $request->validate([
+            'comentario' => 'required|string|max:255',
+        ]);
+
+        // Crear el comentario
+        $comentario = new Comentario_Incidencia();
+        $comentario->incidencia_id = $incidenciaId;
+        $comentario->user_id = Auth::user()->id;
+        $comentario->descripcion = $request->comentario;
+        $comentario->save();
+        return back()->with('success', 'Comentario agregado con exito.');
     }
 
     /**

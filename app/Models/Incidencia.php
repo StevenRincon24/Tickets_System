@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Incidencia extends Model
 {
-    /** @use HasFactory<\Database\Factories\IncidenciaFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -33,5 +32,18 @@ class Incidencia extends Model
     public function dependencia()
     {
         return $this->belongsTo(Dependencia::class);
+    }
+
+    public function notificaciones()
+    {
+        return $this->hasMany(Notificaciones_Incidencia::class);
+    }
+
+    /**
+     * Relación: Una incidencia tiene muchos comentarios.
+     */
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario_Incidencia::class);
     }
 }

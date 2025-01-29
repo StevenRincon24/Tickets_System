@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\IncidenciaCreada;
+use App\Listeners\CrearNotificacionParaIncidencia;
 use App\Models\Incidencia;
-use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Event;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,13 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
+
+    protected $listen = [
+        // Registrar el evento y su listener
+        IncidenciaCreada::class => [
+            CrearNotificacionParaIncidencia::class,
+        ],
+    ];
 
     /**
      * Bootstrap any application services.

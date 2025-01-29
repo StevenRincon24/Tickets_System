@@ -1,6 +1,6 @@
 <template>
 
-    <Head title="Users" />
+    <Head title="Mis tickets" />
     <AuthenticatedLayout>
         <template #header>
             <!-- Título centrado -->
@@ -9,6 +9,8 @@
                 <hr class="my-2 border-t-1 border-gray-900 w-full mx-auto" />
             </div>
         </template>
+
+
 
         <div class="rounded-t mb-0 px-6 py-6">
             <div class="text-center flex justify-between">
@@ -22,30 +24,29 @@
                     Agregar
                 </a>
             </div>
-
-            <!-- Filtro de estado -->
-
         </div>
 
-        <div class="inline-block min-w-full overflow-hidden rounded-lg shadow bg-gray-300">
-            <div class="flex space-x-6 mb-4 m-5">
-                <button class="bg-blue-500 text-white px-4 py-2 rounded focus:outline-none"
-                    @click="filterByState('Pendiente')">
-                    Pendiente
-                </button>
-                <button class="bg-orange-500 text-white px-4 py-2 rounded focus:outline-none"
-                    @click="filterByState('En proceso')">
-                    En curso
-                </button>
-                <button class="bg-green-500 text-white px-4 py-2 rounded focus:outline-none"
-                    @click="filterByState('Finalizada')">
-                    Finalizado
-                </button>
-                <button class="bg-gray-500 text-white px-4 py-2 rounded focus:outline-none" @click="clearFilter">
-                    Todos
-                </button>
-            </div>
-            <table class="w-full whitespace-no-wrap">
+
+        <div class="flex space-x-6 mb-4 m-5">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded focus:outline-none"
+                @click="filterByState('Pendiente')">
+                Pendiente
+            </button>
+            <button class="bg-orange-500 text-white px-4 py-2 rounded focus:outline-none"
+                @click="filterByState('En proceso')">
+                En curso
+            </button>
+            <button class="bg-green-500 text-white px-4 py-2 rounded focus:outline-none"
+                @click="filterByState('Finalizada')">
+                Finalizado
+            </button>
+            <button class="bg-gray-500 text-white px-4 py-2 rounded focus:outline-none" @click="clearFilter">
+                Todos
+            </button>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full whitespace-no-wrap">
                 <thead>
                     <tr
                         class="border-b bg-gray-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
@@ -121,9 +122,10 @@
                             </span>
                         </td>
                         <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                            <div class="flex space-x-3">
-                                <a href="#" class="text-blue-500 hover:text-blue-700"
-                                    @click.prevent="editUser(incidencia.id)">
+                            <div class="flex justify-center space-x-3">
+                                <a v-if="incidencia.estado !== 'Finalizada'"
+                                    :href="route('ticket.show', { incidencia: incidencia.id })"
+                                    class="text-blue-500 hover:text-blue-700">
                                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                         viewBox="0 0 24 24">
@@ -132,23 +134,18 @@
                                             d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
                                     </svg>
                                 </a>
-                                <a href="#" class="text-red-500 hover:text-red-700"
-                                    @click.prevent="deleteUser(incidencia.id)">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M18 6L6 18M6 6l12 12"></path>
-                                    </svg>
-                                </a>
+
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
 
-            <div class="flex flex-col items-center border-t bg-white px-5 py-5 xs:flex-row xs:justify-between">
-                <pagination :links="incidencias.links" />
-            </div>
+
+        </div>
+
+        <div class="flex flex-col items-center border-t bg-white px-5 py-5 xs:flex-row xs:justify-between">
+            <pagination :links="incidencias.links" />
         </div>
     </AuthenticatedLayout>
 </template>
@@ -171,16 +168,6 @@ const formatDate = (date) => {
     return new Date(date).toLocaleDateString('es-ES', options);
 };
 
-// Métodos para manejar la edición y eliminación
-const editUser = (userId) => {
-    // Lógica para editar un usuario
-    console.log('Editar usuario', userId);
-};
-
-const deleteUser = (userId) => {
-    // Lógica para eliminar un usuario
-    console.log('Eliminar usuario', userId);
-};
 
 // Métodos para filtrar las incidencias
 const filterByState = (state) => {

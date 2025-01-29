@@ -3,12 +3,13 @@ import FloatingInput from '@/Components/FloatingInput.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
-
+import { Toast, useToast } from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 // Define props
 defineProps({
     roles: Array // Recibe los roles como una lista desde el backend
 });
-
+const toast = useToast();
 // Inicialización del formulario
 const form = useForm({
     nombre: '',
@@ -19,15 +20,30 @@ const form = useForm({
 
 // Función para guardar los datos
 const guardar = () => {
-    console.log('Datos a enviar:', form.data());
+    if (form.nombre === '' || form.email === '' || form.password === '' || form.role === '') {
+        toast.error('Todos los campos son obligatorios.');
+    }else{
+        // Valida que el email sea válido
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(form.email)) {
+            toast.error('El email no es válido.');
+            return;
+        }
+        // Valida que la contraseña tenga al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordRegex.test(form.password)) {
+            toast.warning('La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.');
+            return;
+        }
+    }
     form.post(route('storeUsers'), {
-        onSuccess: () => {
+        onSuccess: (response) => {
             // Limpia el formulario o muestra un mensaje de éxito
+            toast.success(response.props.flash.success);
             form.reset();
-            alert('Usuario registrado con éxito');
         },
         onError: (errors) => {
-            // Maneja los errores de validación del backend
+            toast.error('Hubo un error al registrar la dependencia.');
             console.error(errors);
         }
     });

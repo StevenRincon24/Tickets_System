@@ -23,6 +23,10 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'crear ticket'])->syncRoles([$admin, $user]);
         Permission::create(['name' => 'Mis tickets'])->syncRoles([$user]);
         Permission::create(['name' => 'Tickets generales'])->syncRoles([$admin]);
+
+        // PERMISO PARA CAMBIAR EL ESTADO DEL TICKET
+        Permission::create(['name' => 'Cambiar estado ticket'])->syncRoles([$admin]);
+
         /* Permission::create(['name' => 'users.index'])->syncRoles([$admin]);
         Permission::create(['name' => 'users.create'])->syncRoles([$admin]);
 

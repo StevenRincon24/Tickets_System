@@ -50,7 +50,7 @@
                             <p class="text-gray-900 whitespace-no-wrap text-lg">{{ dependencia.nombre }}</p>
                         </td>
                         <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm text-right">
-                            <!-- Botón Editar alineado a la derecha -->
+                            <!-- Botón Editar a la derecha -->
                             <button @click="openModal(dependencia)"
                                 class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
                                 Editar
@@ -97,7 +97,6 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
 import { Head } from '@inertiajs/vue3';
 import { Toast, useToast } from 'vue-toast-notification';
-import 'vue-toast-notification/dist/theme-sugar.css';  // Asegúrate de importar el estilo
 
 const toast = useToast(); // Crea la instancia del toast
 

@@ -18,4 +18,9 @@ class Dependencia extends Model
     {
         return $this->hasMany(Incidencia::class);
     }
+
+    public function notificaciones()
+    {
+        return $this->hasMany(Notificaciones_Incidencia::class);
+    }
 }

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -53,5 +54,29 @@ class UserController extends Controller
             // Retornar respuesta
             return back()->with('success', 'Usuario registrado exitosamente.');
         }
+    }
+
+    // FUNCION PARA REALIZAR EL CAMBIO DE CONTRASEÑA
+    public function editPassword(Request $request, User $user)
+    {
+
+        // Validar los datos del request (opcional, pero recomendado)
+        $request->validate([
+            'password' => 'required|string|min:8|confirmed', // Validar que el password sea seguro y que se confirme
+        ]);
+
+        // Habilitar el registro de consultas para depuración
+        DB::enableQueryLog();
+
+        // Modificar la contraseña del usuario recibido como argumento
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        // Obtener las consultas ejecutadas para depuración (opcional)
+        
+
+        // Redireccionar con un mensaje de éxito
+        return redirect()->route('users.index')->with('success', 'La contraseña del usuario ha sido actualizada correctamente.');
     }
 }

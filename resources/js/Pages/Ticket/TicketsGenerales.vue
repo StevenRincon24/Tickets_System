@@ -10,7 +10,7 @@
             </div>
         </template>
 
-        <div class="rounded-t mb-0 px-6 py-6">
+        <div class="rounded-t mb-0 px-6 py-2">
             <div class="text-center flex justify-between">
                 <a href="ticketcreate"
                     class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-m px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 flex items-center">
@@ -22,30 +22,30 @@
                     Agregar
                 </a>
             </div>
-
-            <!-- Filtro de estado -->
-
+        </div>
+        
+        <!-- Filtro de estado -->
+        <div class="flex space-x-6 mb-4 m-5">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded focus:outline-none"
+                @click="filterByState('Pendiente')">
+                Pendiente
+            </button>
+            <button class="bg-orange-500 text-white px-4 py-2 rounded focus:outline-none"
+                @click="filterByState('En proceso')">
+                En curso
+            </button>
+            <button class="bg-green-500 text-white px-4 py-2 rounded focus:outline-none"
+                @click="filterByState('Finalizada')">
+                Finalizado
+            </button>
+            <button class="bg-gray-500 text-white px-4 py-2 rounded focus:outline-none" @click="clearFilter">
+                Todos
+            </button>
         </div>
 
-        <div class="inline-block min-w-full overflow-hidden rounded-lg shadow bg-gray-300">
-            <div class="flex space-x-6 mb-4 m-5">
-                <button class="bg-blue-500 text-white px-4 py-2 rounded focus:outline-none"
-                    @click="filterByState('Pendiente')">
-                    Pendiente
-                </button>
-                <button class="bg-orange-500 text-white px-4 py-2 rounded focus:outline-none"
-                    @click="filterByState('En proceso')">
-                    En curso
-                </button>
-                <button class="bg-green-500 text-white px-4 py-2 rounded focus:outline-none"
-                    @click="filterByState('Finalizada')">
-                    Finalizado
-                </button>
-                <button class="bg-gray-500 text-white px-4 py-2 rounded focus:outline-none" @click="clearFilter">
-                    Todos
-                </button>
-            </div>
-            <table class="w-full whitespace-no-wrap">
+        <!-- Tabla responsiva -->
+        <div class="overflow-x-auto">
+            <table class="min-w-full whitespace-no-wrap">
                 <thead>
                     <tr
                         class="border-b bg-gray-50 text-left text-xs font-semibold uppercase tracking-wide text-gray-500">
@@ -86,22 +86,34 @@
                 <tbody>
                     <tr v-for="incidencia in filteredIncidencias" :key="incidencia.id" class="text-gray-700">
                         <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">{{ formatDate(incidencia.created_at) }}</p>
+                            <p class="text-gray-900 whitespace-no-wrap">
+                                {{ formatDate(incidencia.created_at) }}
+                            </p>
                         </td>
                         <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">{{ incidencia.titulo }}</p>
+                            <p class="text-gray-900 whitespace-no-wrap">
+                                {{ incidencia.titulo }}
+                            </p>
                         </td>
                         <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">{{ incidencia.descripcion }}</p>
+                            <p class="text-gray-900 whitespace-no-wrap">
+                                {{ incidencia.descripcion }}
+                            </p>
                         </td>
                         <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">{{ incidencia.dependencia }}</p>
+                            <p class="text-gray-900 whitespace-no-wrap">
+                                {{ incidencia.dependencia }}
+                            </p>
                         </td>
                         <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">{{ incidencia.tipo_incidencia }}</p>
+                            <p class="text-gray-900 whitespace-no-wrap">
+                                {{ incidencia.tipo_incidencia }}
+                            </p>
                         </td>
                         <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">{{ incidencia.criticidad }}</p>
+                            <p class="text-gray-900 whitespace-no-wrap">
+                                {{ incidencia.criticidad }}
+                            </p>
                         </td>
                         <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
                             <span v-if="incidencia.estado === 'Finalizada'"
@@ -121,9 +133,11 @@
                             </span>
                         </td>
                         <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                            <div class="flex space-x-3">
-                                <a :href="route('ticket.show', {incidencia: incidencia.id })"
-                                    class="text-blue-500 hover:text-blue-700">
+                            <div class="flex justify-center space-x-3">
+                                <a v-if="incidencia.estado !== 'Finalizada'" :href="route('ticket.show', {
+                                    incidencia: incidencia.id,
+                                })
+                                    " class="text-blue-500 hover:text-blue-700">
                                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                         viewBox="0 0 24 24">
@@ -132,50 +146,42 @@
                                             d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
                                     </svg>
                                 </a>
-                                <a href="#" class="text-red-500 hover:text-red-700"
-                                    @click.prevent="deleteUser(incidencia.id)">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M18 6L6 18M6 6l12 12"></path>
-                                    </svg>
-                                </a>
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
+        </div>
 
-            <div class="flex flex-col items-center border-t bg-white px-5 py-5 xs:flex-row xs:justify-between">
-                <pagination :links="incidencias.links" />
-            </div>
+        <div class="flex flex-col items-center border-t bg-white px-5 py-5 xs:flex-row xs:justify-between">
+            <pagination :links="incidencias.links" />
         </div>
     </AuthenticatedLayout>
 </template>
 
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import Pagination from '@/Components/Pagination.vue';
-import { Head } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import Pagination from "@/Components/Pagination.vue";
+import { Head } from "@inertiajs/vue3";
+import { ref } from "vue";
 
 const props = defineProps({
-    incidencias: Object
+    incidencias: Object,
 });
 
 const filteredIncidencias = ref(props.incidencias.data);
 
 // Método para formatear la fecha
 const formatDate = (date) => {
-    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-    return new Date(date).toLocaleDateString('es-ES', options);
+    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
+    return new Date(date).toLocaleDateString("es-ES", options);
 };
-
-
 
 // Métodos para filtrar las incidencias
 const filterByState = (state) => {
-    filteredIncidencias.value = props.incidencias.data.filter(incidencia => incidencia.estado === state);
+    filteredIncidencias.value = props.incidencias.data.filter(
+        (incidencia) => incidencia.estado === state
+    );
 };
 
 const clearFilter = () => {
