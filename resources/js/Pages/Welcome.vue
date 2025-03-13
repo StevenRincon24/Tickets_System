@@ -15,7 +15,7 @@ defineProps({
     <Head title="Mesa de Ayuda - Alcaldía de Nobsa" />
     <div class="min-h-screen bg-gray-50">
         <!-- Header -->
-        <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3 bg-blue-900 text-white">
+        <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3 bg-red-600 text-white">
             <div class="flex lg:col-start-2 ">
                 <img src="https://i.postimg.cc/pr1mFYdR/Logo.png" alt="Logo Nobsa" class="h-12 rounded-full" />
                 <h1 class="text-2xl font-bold">Alcaldía de Nobsa</h1>
@@ -30,11 +30,13 @@ defineProps({
                     <LogIn class="h-5 w-5" />
                     <span>Iniciar sesión</span>
                     </Link>
+                    <!--
+                    BOTON PARA REGISTRARSE NO USAR
                     <Link v-if="canRegister" :href="route('register')"
                         class="rounded-md px-3 py-2 text-white flex items-center space-x-2">
                     <UserPlus class="h-5 w-5" />
                     <span>Registrarse</span>
-                    </Link>
+                    </Link> -->
                 </template>
             </nav>
         </header>
@@ -42,10 +44,11 @@ defineProps({
 
 
         <!-- Hero Section -->
-        <div class="bg-blue-800 text-white py-16 text-center">
+        <div class=" text-black py-16 text-center">
             <h2 class="text-4xl font-bold mb-4">Mesa de Ayuda</h2>
-            <p class="text-xl text-blue-100 max-w-2xl mx-auto">
-                Bienvenido al sistema de soporte técnico de la Alcaldía de Nobsa. Estamos aquí para ayudarte con todas
+            <p class="text-xl text-black max-w-2xl mx-auto">
+                Bienvenido al sistema de soporte técnico de la Alcaldía de Nobsa. Estamos aquí para ayudarte
+                con todas
                 tus
                 necesidades tecnológicas.
             </p>
@@ -59,37 +62,43 @@ defineProps({
                     <div class="p-6 border rounded-lg shadow-sm hover:shadow-md transition bg-white">
                         <component :is="Code2" class="w-8 h-8 text-blue-600 mb-4" />
                         <h4 class="text-xl font-semibold mb-2">Desarrollo Web</h4>
-                        <p class="text-gray-600"> Desarrollo de aplicaciones web con tecnologías modernas.</p>
+                        <p class="text-gray-600"> Desarrollo de aplicaciones web con tecnologías modernas.
+                        </p>
                     </div>
 
                     <div class="p-6 border rounded-lg shadow-sm hover:shadow-md transition bg-white">
                         <component :is="Code2" class="w-8 h-8 text-blue-600 mb-4" />
                         <h4 class="text-xl font-semibold mb-2">Desarrollo Web</h4>
-                        <p class="text-gray-600"> Desarrollo de aplicaciones web con tecnologías modernas.</p>
+                        <p class="text-gray-600"> Desarrollo de aplicaciones web con tecnologías modernas.
+                        </p>
                     </div>
 
                     <div class="p-6 border rounded-lg shadow-sm hover:shadow-md transition bg-white">
                         <component :is="Code2" class="w-8 h-8 text-blue-600 mb-4" />
                         <h4 class="text-xl font-semibold mb-2">Desarrollo Web</h4>
-                        <p class="text-gray-600"> Desarrollo de aplicaciones web con tecnologías modernas.</p>
+                        <p class="text-gray-600"> Desarrollo de aplicaciones web con tecnologías modernas.
+                        </p>
                     </div>
 
                     <div class="p-6 border rounded-lg shadow-sm hover:shadow-md transition bg-white">
                         <component :is="Code2" class="w-8 h-8 text-blue-600 mb-4" />
                         <h4 class="text-xl font-semibold mb-2">Desarrollo Web</h4>
-                        <p class="text-gray-600"> Desarrollo de aplicaciones web con tecnologías modernas.</p>
+                        <p class="text-gray-600"> Desarrollo de aplicaciones web con tecnologías modernas.
+                        </p>
                     </div>
 
                     <div class="p-6 border rounded-lg shadow-sm hover:shadow-md transition bg-white">
                         <component :is="Code2" class="w-8 h-8 text-blue-600 mb-4" />
                         <h4 class="text-xl font-semibold mb-2">Desarrollo Web</h4>
-                        <p class="text-gray-600"> Desarrollo de aplicaciones web con tecnologías modernas.</p>
+                        <p class="text-gray-600"> Desarrollo de aplicaciones web con tecnologías modernas.
+                        </p>
                     </div>
 
                     <div class="p-6 border rounded-lg shadow-sm hover:shadow-md transition bg-white">
                         <component :is="Code2" class="w-8 h-8 text-blue-600 mb-4" />
                         <h4 class="text-xl font-semibold mb-2">Desarrollo Web</h4>
-                        <p class="text-gray-600"> Desarrollo de aplicaciones web con tecnologías modernas.</p>
+                        <p class="text-gray-600"> Desarrollo de aplicaciones web con tecnologías modernas.
+                        </p>
                     </div>
 
 

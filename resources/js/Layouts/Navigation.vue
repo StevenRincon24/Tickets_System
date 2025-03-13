@@ -27,13 +27,15 @@ onMounted(() => {
         class="fixed inset-0 z-20 bg-black opacity-50 transition-opacity lg:hidden"></div>
 
     <div :class="$page.props.showingMobileMenu ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'"
-        class="overflow-y-auto fixed inset-y-0 left-0 z-30 w-64 bg-gray-900 transition duration-300 transform lg:translate-x-0 lg:static lg:inset-0">
+        class="overflow-y-auto fixed inset-y-0 left-0 z-30 w-64 bg-red-600 transition duration-300 transform lg:translate-x-0 lg:static lg:inset-0">
         <div class="flex justify-center items-center mt-8">
             <div class="flex items-center">
-
+                <img src="https://i.postimg.cc/pr1mFYdR/Logo.png" alt="Icono de gestión de incidencias"
+                    class="w-50 h-20 mr-2">
                 <span class="mx-2 text-2xl font-semibold text-white text-center">Gestión de incidencias</span>
             </div>
         </div>
+
 
         <nav class="mt-10" x-data="{ isMultiLevelMenuOpen: false }">
 
@@ -217,8 +219,7 @@ onMounted(() => {
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
-                                <path stroke="white" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2"
+                                <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 6h8m-8 6h8m-8 6h8M4 16a2 2 0 1 1 3.321 1.5L4 20h5M4 5l2-1v6m-2 0h4" />
                             </svg>
 
