@@ -23,4 +23,9 @@ class Dependencia extends Model
     {
         return $this->hasMany(Notificaciones_Incidencia::class);
     }
+
+    public function usuarios()
+    {
+        return $this->hasMany(User::class);
+    }
 }

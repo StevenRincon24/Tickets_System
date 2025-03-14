@@ -18,11 +18,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password'
-    ];
+    protected $fillable = ['name', 'email', 'password', 'dependencia_id'];
 
     public function incidencias()
     {
@@ -37,6 +33,11 @@ class User extends Authenticatable
     public function notificaciones()
     {
         return $this->hasMany(Notificaciones_Incidencia::class);
+    }
+
+    public function dependencia()
+    {
+        return $this->belongsTo(Dependencia::class);
     }
 
     /**

@@ -10,6 +10,7 @@ const toast = useToast();
 const props = defineProps({
     tipo_incidencias: {
         type: Array
+
     },
 
     dependencias: {

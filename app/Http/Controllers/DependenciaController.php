@@ -13,8 +13,10 @@ class DependenciaController extends Controller
      */
     public function index()
     {
+        $dependencias = Dependencia::with('usuarios')->paginate(10);
+
         return Inertia::render('Dependencias/Index', [
-            'dependencias' => Dependencia::paginate(5)
+            'dependencias' => $dependencias
         ]);
     }
 
@@ -79,6 +81,6 @@ class DependenciaController extends Controller
      */
     public function destroy(Dependencia $dependencia)
     {
-        
+
     }
 }

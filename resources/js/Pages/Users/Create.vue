@@ -5,23 +5,32 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { Toast, useToast } from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
-// Define props
-defineProps({
-    roles: Array // Recibe los roles como una lista desde el backend
-});
+
+
+const props = defineProps({
+    roles: {
+        Array
+     },
+
+    dependencias: {
+        type: Array
+    },
+})
 const toast = useToast();
 // Inicialización del formulario
 const form = useForm({
     nombre: '',
     email: '',
     password: '',
-    role: ''
+    role: '',
+    dependencia_id: '',
 });
 
 // Función para guardar los datos
 const guardar = () => {
-    if (form.nombre === '' || form.email === '' || form.password === '' || form.role === '') {
+    if (form.nombre === '' || form.email === '' || form.password === '' || form.role === '' || form.dependencia_id === '') {
         toast.error('Todos los campos son obligatorios.');
+        return;
     }else{
         // Valida que el email sea válido
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -50,9 +59,10 @@ const guardar = () => {
 };
 </script>
 
+
 <template>
 
-    <Head title="Dashboard" />
+    <Head title="Crear usuario" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -97,7 +107,24 @@ const guardar = () => {
                         <label for="floating_email"
                             class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Contraseña
                         </label>
+                        <span v-if="form.errors.password" class="text-red-500 text-sm mt-1">{{ form.errors.password }}</span>
+
                     </div>
+
+
+                    <div class="relative z-0 w-full mb-5 group">
+                        <label for="dependencia_id" class="block text-sm font-medium text-gray-700">Dependencia</label>
+                        <select id="dependencia_id" name="dependencia_id" v-model="form.dependencia_id"
+                            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            <option value="" disabled selected>--Dependencia--</option>
+
+                            <option v-for="dependencia in dependencias" :key="dependencia.id" :value="dependencia.id">
+                                {{ dependencia.nombre }}
+                            </option>                        </select>
+                        <span v-if="form.errors.role" class="text-red-500 text-sm mt-1">{{ form.errors.role }}</span>
+                    </div>
+
+
 
                     <div class="relative z-0 w-full mb-5 group">
                         <label for="role" class="block text-sm font-medium text-gray-700">Rol</label>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dependencia;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class UserController extends Controller
     public function index()
     {
 
-        $users = User::with('roles')->paginate(10);
+        $users = User::with(['roles', 'dependencia'])->paginate(10);
 
         return Inertia::render('Users/Index', [
             'users' => $users,
@@ -26,7 +27,8 @@ class UserController extends Controller
     {
         $roles = Role::all();
         return Inertia('Users/Create', [
-            'roles' => $roles
+            'roles' => $roles,
+            'dependencias' => Dependencia::all(),
         ]);
     }
 
@@ -38,7 +40,8 @@ class UserController extends Controller
                 'nombre' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|string|min:8',
-                'role' => 'required|exists:roles,name', // Validar que el rol exista
+                'role' => 'required|exists:roles,name',
+                'dependencia_id' => 'required|exists:dependencias,id', // Validar que la dependencia exista
 
             ]);
 
@@ -47,6 +50,7 @@ class UserController extends Controller
                 'name' => $validated['nombre'],
                 'email' => $validated['email'],
                 'password' => bcrypt($validated['password']),
+                'dependencia_id' => $validated['dependencia_id'], // Asignar dependencia
             ]);
 
             $user->assignRole($validated['role']);
@@ -74,7 +78,7 @@ class UserController extends Controller
         ]);
 
         // Obtener las consultas ejecutadas para depuración (opcional)
-        
+
 
         // Redireccionar con un mensaje de éxito
         return redirect()->route('users.index')->with('success', 'La contraseña del usuario ha sido actualizada correctamente.');
