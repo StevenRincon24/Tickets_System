@@ -15,25 +15,23 @@ class NotificacionesIncidenciaController extends Controller
     public function index()
     {
         $notificaciones = DB::table('notificaciones_incidencias')
-        ->join('incidencias', 'notificaciones_incidencias.incidencia_id', '=', 'incidencias.id')
-        ->join('users', 'notificaciones_incidencias.user_id', '=', 'users.id')
-        ->join('dependencias', 'notificaciones_incidencias.dependencia_id', '=', 'dependencias.id')
-        ->select(
-            'notificaciones_incidencias.id',
-            'notificaciones_incidencias.created_at',
-            'notificaciones_incidencias.leido',
-            'incidencias.titulo',
-            'incidencias.descripcion',
-            'incidencias.criticidad',
-            'incidencias.estado',
-            'users.name as usuario',
-            'dependencias.nombre as dependencia'
-        );
-        dd($notificaciones);
+            ->join('incidencias', 'notificaciones_incidencias.incidencia_id', '=', 'incidencias.id')
+            ->join('users', 'notificaciones_incidencias.user_id', '=', 'users.id')
+            ->join('dependencias', 'notificaciones_incidencias.dependencia_id', '=', 'dependencias.id')
+            ->select(
+                'notificaciones_incidencias.id',
+                'notificaciones_incidencias.created_at',
+                'notificaciones_incidencias.leido',
+                'incidencias.titulo',
+                'incidencias.descripcion',
+                'incidencias.estado',
+                'users.name as usuario',
+                'dependencias.nombre as dependencia'
+            );
+        //        dd($notificaciones);
         return Inertia::render('Layouts/Header', [
             'notificaciones' => $notificaciones->paginate(10)
         ]);
-
     }
 
     /**

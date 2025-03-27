@@ -23,7 +23,7 @@
                 </a>
             </div>
         </div>
-        
+
         <!-- Filtro de estado -->
         <div class="flex space-x-6 mb-4 m-5">
             <button class="bg-blue-500 text-white px-4 py-2 rounded focus:outline-none"
@@ -67,11 +67,11 @@
                         </th>
                         <th
                             class="border-b-2 border-gray-200 bg-gray-100 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
-                            Tipo de incidencia
+                            Usuario solicitante
                         </th>
                         <th
                             class="border-b-2 border-gray-200 bg-gray-100 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
-                            Nivel de prioridad
+                            Actividad realizada
                         </th>
                         <th
                             class="border-b-2 border-gray-200 bg-gray-100 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
@@ -107,12 +107,12 @@
                         </td>
                         <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
                             <p class="text-gray-900 whitespace-no-wrap">
-                                {{ incidencia.tipo_incidencia }}
+                                {{ incidencia.usuario }}
                             </p>
                         </td>
                         <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
                             <p class="text-gray-900 whitespace-no-wrap">
-                                {{ incidencia.criticidad }}
+                                {{ incidencia.actividad }}
                             </p>
                         </td>
                         <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">

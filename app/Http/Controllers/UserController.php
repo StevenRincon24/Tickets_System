@@ -25,6 +25,7 @@ class UserController extends Controller
 
     public function create()
     {
+        
         $roles = Role::all();
         return Inertia('Users/Create', [
             'roles' => $roles,

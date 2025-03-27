@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Events\IncidenciaCreada;
+use App\Models\Categoria;
 use App\Models\Dependencia;
 use App\Models\Incidencia;
 use App\Models\Notificaciones_Incidencia;
+use App\Models\Subcategoria;
 use App\Models\TipoIncidencias;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -21,7 +23,6 @@ class IncidenciaController extends Controller
     public function index()
     {
         $incidencias = DB::table('incidencias')
-            ->join('tipo_incidencias', 'incidencias.tipo_incidencia_id', '=', 'tipo_incidencias.id')
             ->join('users', 'incidencias.user_id', '=', 'users.id')
             ->join('dependencias', 'incidencias.dependencia_id', '=', 'dependencias.id')
             ->where('incidencias.user_id', Auth::user()->id)
@@ -30,9 +31,7 @@ class IncidenciaController extends Controller
                 'incidencias.created_at',
                 'incidencias.titulo',
                 'incidencias.descripcion',
-                'incidencias.criticidad',
                 'incidencias.estado',
-                'tipo_incidencias.nombre as tipo_incidencia',
                 'users.name as usuario',
                 'dependencias.nombre as dependencia'
             )
@@ -47,20 +46,19 @@ class IncidenciaController extends Controller
     public function incidenciasGenerales()
     {
         $incidencias = DB::table('incidencias')
-            ->join('tipo_incidencias', 'incidencias.tipo_incidencia_id', '=', 'tipo_incidencias.id')
             ->join('users', 'incidencias.user_id', '=', 'users.id')
             ->join('dependencias', 'incidencias.dependencia_id', '=', 'dependencias.id')
+            ->join('subcategorias', 'subcategorias.id', '=', 'incidencias.subcategoria_id')
 
             ->select(
                 'incidencias.created_at',
                 'incidencias.id',
                 'incidencias.titulo',
                 'incidencias.descripcion',
-                'incidencias.criticidad',
                 'incidencias.estado',
-                'tipo_incidencias.nombre as tipo_incidencia',
                 'users.name as usuario',
-                'dependencias.nombre as dependencia'
+                'dependencias.nombre as dependencia',
+                'subcategorias.nombre as actividad'
             )
             ->orderBy('incidencias.created_at', 'desc')
             ->paginate(10);
@@ -98,10 +96,11 @@ class IncidenciaController extends Controller
     public function create()
     {
         return Inertia::render('Ticket/Create', [
-            'tipo_incidencias' => TipoIncidencias::all(),
             'dependencias' => Dependencia::all(),
+            'categorias' => Categoria::with('subcategorias')->get(),
         ]);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -111,10 +110,10 @@ class IncidenciaController extends Controller
         // Validar los datos de la solicitud
         $request->validate([
             'titulo' => 'required|string|max:255',
-            'tipo_incidencia_id' => 'required|exists:tipo_incidencias,id',
+
             'dependencia_id' => 'required|exists:dependencias,id',
             'descripcion' => 'required|string',
-            'criticidad' => 'required',
+            'subcategoria_id' => 'required|exists:subcategorias,id',
         ]);
 
         // Obtener el usuario autenticado
@@ -125,11 +124,10 @@ class IncidenciaController extends Controller
         $incidencia = Incidencia::create([
             'titulo' => $request->titulo,
             'descripcion' => $request->descripcion,
-            'tipo_incidencia_id' => $request->tipo_incidencia_id,
-            'criticidad' => $request->criticidad,
             'estado' => 'Pendiente',
             'user_id' => $user->id,
             'dependencia_id' => $request->dependencia_id,
+            'subcategoria_id' => $request->subcategoria_id,
         ]);
 
         // Disparar el evento IncidenciaCreada

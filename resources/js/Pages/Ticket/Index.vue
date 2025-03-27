@@ -68,12 +68,9 @@
                         </th>
                         <th
                             class="border-b-2 border-gray-200 bg-gray-100 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
-                            Tipo de incidencia
+                            Usuario
                         </th>
-                        <th
-                            class="border-b-2 border-gray-200 bg-gray-100 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
-                            Nivel de prioridad
-                        </th>
+
                         <th
                             class="border-b-2 border-gray-200 bg-gray-100 px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
                             Estado
@@ -101,9 +98,7 @@
                         <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
                             <p class="text-gray-900 whitespace-no-wrap">{{ incidencia.tipo_incidencia }}</p>
                         </td>
-                        <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">{{ incidencia.criticidad }}</p>
-                        </td>
+
                         <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
                             <span v-if="incidencia.estado === 'Finalizada'"
                                 class="bg-green-500 text-white py-1 px-3 rounded-full text-xs">

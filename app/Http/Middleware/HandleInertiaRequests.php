@@ -51,7 +51,6 @@ class HandleInertiaRequests extends Middleware
                 'notificaciones_incidencias.leido',
                 'incidencias.titulo',
                 'incidencias.descripcion',
-                'incidencias.criticidad',
                 'incidencias.estado',
                 'users.name as usuario',
                 'dependencias.nombre as dependencia'

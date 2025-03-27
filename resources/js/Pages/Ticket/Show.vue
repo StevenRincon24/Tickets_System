@@ -133,20 +133,7 @@ const guardarComentario = () => {
                         </p>
                         <p class="text-gray-600">{{ incidencia.descripcion }}</p>
                     </div>
-                    <div>
-                        <p class="font-semibold text-gray-700 mb-1">
-                            Nivel de prioridad:
-                        </p>
-                        <p>
-                            <span class="inline-block px-2 py-1 text-sm font-medium text-white rounded" :class="{
-                                'bg-red-600': incidencia.criticidad === 'Alta',
-                                'bg-orange-500': incidencia.criticidad === 'Media',
-                                'bg-blue-500': incidencia.criticidad === 'Baja',
-                            }">
-                                {{ incidencia.criticidad }}
-                            </span>
-                        </p>
-                    </div>
+
                 </div>
 
                 <div class="mt-4">

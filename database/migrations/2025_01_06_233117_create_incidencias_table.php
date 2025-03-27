@@ -16,8 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->string('titulo');
             $table->text('descripcion');
-            $table->foreignId('tipo_incidencia_id')->constrained('tipo_incidencias')->onDelete('cascade');
-            $table->string('criticidad'); // Nivel de criticidad
+            //$table->foreignId('tipo_incidencia_id')->constrained('tipo_incidencias')->onDelete('cascade');
+            //$table->string('criticidad'); // Nivel de criticidad
             $table->string('estado'); // Estado de la incidencia
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('dependencia_id')->constrained('dependencias')->onDelete('cascade');

@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DependenciaController;
 use App\Http\Controllers\IncidenciaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ComentarioIncidenciaController;
 use App\Http\Controllers\NotificacionesIncidenciaController;
+use App\Http\Controllers\SubcategoriaController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,12 +42,24 @@ Route::middleware('auth')->group(function () {
     // RUTAS PARA GESTION DE USUARIOS
     Route::put('/user/{user}', [UserController::class, 'editPassword'])->name('users.editPassword');
 
+    // RUTAS PARA LA GESTION DE CATEGORIAS DE INCIDENCIAS
+    Route::get('/categorias', [CategoriaController::class, 'create'])->name('categorias.create');
+    Route::post('categorias', [CategoriaController::class, 'store'])->name('storeCategorias');
+
+    // RUTAS PARA LA GESTIOND DE LAS SUBCATEGORIAS
+    Route::get('/subcategorias', [SubcategoriaController::class, 'create'])->name('SubCategorias.create');
+    Route::post('subcategorias', [SubcategoriaController::class, 'store'])->name('storeSubcategorias');
+
+
+    
+
     Route::get('/ticketcreate', [IncidenciaController::class, 'create'])->name('ticket.create');
-    Route::post('/ticketcreate', [IncidenciaController::class,'store'])->name('storeIncidencia');
+    Route::post('/ticketcreate', [IncidenciaController::class, 'store'])->name('storeIncidencia');
     Route::get('/tickets', [IncidenciaController::class, 'index'])->name('ticket.index');
     Route::get('/ticketsGenerales', [IncidenciaController::class, 'incidenciasGenerales'])->name('ticket.ticketsGenerales')->middleware('can:Tickets generales');
     Route::get('/verTicket/{incidencia}', [IncidenciaController::class, 'show'])->name('ticket.show');
     Route::put('/ticket/{incidencia}', [IncidenciaController::class, 'update'])->name('ticket.update');
+
     // LISTA DE RUTAS PARA USUARIOS
     Route::get('/addUser', [UserController::class, 'create'])->name('users.create');
     Route::get('users', [UserController::class, 'index'])->name('users.index')->middleware('can:ver usuario');;

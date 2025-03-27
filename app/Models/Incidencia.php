@@ -12,16 +12,16 @@ class Incidencia extends Model
     protected $fillable = [
         'titulo',
         'descripcion',
-        'tipo_incidencia_id',
-        'criticidad',
         'estado',
         'user_id',
-        'dependencia_id'
+        'dependencia_id',
+        'subcategoria_id',
     ];
 
-    public function tipoIncidencia()
+
+    public function subcategoria()
     {
-        return $this->belongsTo(TipoIncidencias::class);
+        return $this->belongsTo(Subcategoria::class);
     }
 
     public function user()
@@ -32,6 +32,11 @@ class Incidencia extends Model
     public function dependencia()
     {
         return $this->belongsTo(Dependencia::class);
+    }
+
+    public function categoria()
+    {
+        return $this->hasOneThrough(Categoria::class, Subcategoria::class, 'id', 'id', 'subcategoria_id', 'categoria_id');
     }
 
     public function notificaciones()

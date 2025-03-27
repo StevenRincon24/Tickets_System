@@ -10,7 +10,7 @@ let showingTwoLevelMenu = ref(false)
 let showingTwoLevelMenuUsers = ref(false)
 let showingTwoLevelMenuDependencias = ref(false)
 let showingTwoLevelMenuDashboard = ref(false)
-
+let showingTwoLevelMenuTipoServicio = ref(false)
 const page = usePage()
 
 const incidenciasPendientes = computed(() => page.props.incidenciasPendientes);
@@ -103,13 +103,13 @@ onMounted(() => {
             <!-- MENU PARA GESTION DE DEPENDECIAS -->
             <a v-if="$page.props.user.permissions.includes('ver usuario')"
                 class="flex items-center mt-4 py-2 px-6 text-gray-100" href="#"
-                @click="showingTwoLevelMenuDependencias = !showingTwoLevelMenuDependencias">
+                @click="showingTwoLevelMenuDependencias = !showingTwoLevelMenuDependencias"
+                @mouseenter="tooltipText = 'Gestiona las dependencias de los tickets'" @mouseleave="tooltipText = ''">
                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                     width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M15 9h3m-3 3h3m-3 3h3m-6 1c-.306-.613-.933-1-1.618-1H7.618c-.685 0-1.312.387-1.618 1M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm7 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" />
                 </svg>
-
                 <span class="mx-3">Dependencias</span>
             </a>
             <transition enter-to-class="transition-all duration-300 ease-in-out" enter-from-class="max-h-0 opacity-25"
@@ -142,6 +142,49 @@ onMounted(() => {
                     </ul>
                 </div>
             </transition>
+
+            <!-- MENU PARA GESTION DE TIPO DE SERVICIO -->
+            <a v-if="$page.props.user.permissions.includes('ver usuario')"
+                class="flex items-center mt-4 py-2 px-6 text-gray-100" href="#"
+                @click="showingTwoLevelMenuTipoServicio = !showingTwoLevelMenuTipoServicio">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 13v-2a1 1 0 0 0-1-1h-.757l-.707-1.707.535-.536a1 1 0 0 0 0-1.414l-1.414-1.414a1 1 0 0 0-1.414 0l-.536.535L14 4.757V4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v.757l-1.707.707-.536-.535a1 1 0 0 0-1.414 0L4.929 6.343a1 1 0 0 0 0 1.414l.536.536L4.757 10H4a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h.757l.707 1.707-.535.536a1 1 0 0 0 0 1.414l1.414 1.414a1 1 0 0 0 1.414 0l.536-.535 1.707.707V20a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.757l1.707-.708.536.536a1 1 0 0 0 1.414 0l1.414-1.414a1 1 0 0 0 0-1.414l-.535-.536.707-1.707H20a1 1 0 0 0 1-1Z" />
+                    <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                </svg>
+
+                <span class="mx-3">Tipo de servicio</span>
+            </a>
+            <transition enter-to-class="transition-all duration-300 ease-in-out" enter-from-class="max-h-0 opacity-25"
+                leave-from-class="opacity-100 max-h-xl" leave-to-class="max-h-0 opacity-0">
+                <div v-show="showingTwoLevelMenuTipoServicio">
+                    <ul class="overflow-hidden p-2 mx-4 mt-2 space-y-2 text-sm font-medium text-white bg-gray-700
+            bg-opacity-50 rounded-md shadow-inner" aria-label="submenu">
+                        <li class="px-2 py-1 transition-colors duration-150 flex items-center">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                viewBox="0 0 24 24">
+                                <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14.121 14.121a4.002 4.002 0 1 1-5.656-5.657l-2.83-2.828a2 2 0 0 1 2.828-2.829l2.829 2.83a4.002 4.002 0 0 1 5.657 5.657m-1.414 1.414 4.243 4.243a2 2 0 0 1-2.829 2.828l-4.243-4.243m-6.364-1.414L3 21m6.364-6.364 2.828 2.828" />
+                            </svg>
+                            <Link class="w-full mx-2" :href="route('categorias.create')">Añadir</Link>
+                        </li>
+
+                        <li class="px-2 py-1 transition-colors duration-150 flex items-center">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                viewBox="0 0 24 24">
+                                <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14.121 14.121a4.002 4.002 0 1 1-5.656-5.657l-2.83-2.828a2 2 0 0 1 2.828-2.829l2.829 2.83a4.002 4.002 0 0 1 5.657 5.657m-1.414 1.414 4.243 4.243a2 2 0 0 1-2.829 2.828l-4.243-4.243m-6.364-1.414L3 21m6.364-6.364 2.828 2.828" />
+                            </svg>
+                            <Link class="w-full ml-2" :href="route('SubCategorias.create')">Agregar subcategoría</Link>
+                        </li>
+                    </ul>
+                </div>
+            </transition>
+
 
             <!-- MENU PARA GESTION DE USUARIOS -->
             <a v-if="$page.props.user.permissions.includes('ver usuario')"
